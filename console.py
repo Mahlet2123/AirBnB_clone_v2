@@ -126,25 +126,30 @@ class HBNBCommand(cmd.Cmd):
         count = 0
         param_key = []
         param_value = []
+        
         for param in line[1:]:
-            param = param.split("=")
-            count = count + 1
-            match = re.search('^"(.*)"$', param[1])
-            if match:
-                value = match.group(1)
-                value = value.replace('_', ' ')
+            if (True):
+                param = param.split("=")
+                count = count + 1
+                match = re.search('^"(.*)"$', param[1])
+                if match:
+                    value = match.group(1)
+                    value = value.replace('_', ' ')
+                    # value = re.sub(r'(?<!\\)"', r'\\\"', value)
+                if not match: 
+                    value = param[1]
+                    if "." in value:
+                        cast = float
+                    else:
+                        cast = int
+                    try:
+                        value = cast(value)
+                    except ValueError:
+                        pass
+                param_key.append(param[0])
+                param_value.append(value)
             else:
-                value = param[1]
-                if "." in value:
-                    cast = float
-                else:
-                    cast = int
-                try:
-                    value = cast(value)
-                except ValueError:
-                    pass
-            param_key.append(param[0])
-            param_value.append(value)
+                return (False)
 
         new_instance = HBNBCommand.classes[line[0]]()
         i = 0

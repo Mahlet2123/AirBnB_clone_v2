@@ -12,14 +12,12 @@ class FileStorage:
         """deletes obj from __objects if it's inside
         Args: obj = given object
         """
-        if not obj:
-            return
-        key = "{}.{}".format(type(obj).__name__, obj.id)
-
-        # print ("-------->", self.__objects, "<-------")
-        if key in self.__objects:
-            del self.__objects[key]
-            self.save()
+        if obj:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            # print ("-------->", self.__objects, "<-------")
+            if key in FileStorage.__objects:
+                del FileStorage.__objects[key]
+                # FileStorage.save()
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""

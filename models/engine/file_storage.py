@@ -18,7 +18,6 @@ class FileStorage:
             if key in FileStorage.__objects.keys():
                 del FileStorage.__objects[key]
 
-
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         if cls:

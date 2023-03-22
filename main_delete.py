@@ -6,7 +6,7 @@ from models.state import State
 
 fs = FileStorage()
 
-# All States
+# contains all states
 all_states = fs.all(State)
 print("All States: {}".format(len(all_states.keys())))
 for state_key in all_states.keys():
@@ -38,7 +38,7 @@ print("All States: {}".format(len(all_states.keys())))
 for state_key in all_states.keys():
     print(all_states[state_key])        
 
-# Delete the new State
+# Delete the new  State
 fs.delete(new_state)
 
 # All States

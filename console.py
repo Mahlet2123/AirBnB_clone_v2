@@ -135,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
                 if match:
                     value = match.group(1)
                     value = value.replace('_', ' ')
-                    # value = re.sub(r'(?<!\\)"', r'\\\"', value)
+                    value = re.sub(r'(?<!\\)"', r'\\\"', value)
                 if not match: 
                     value = param[1]
                     if "." in value:

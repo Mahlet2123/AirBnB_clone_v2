@@ -14,14 +14,23 @@ class FileStorage:
         """
         if obj:
             key = "{}.{}".format(type(obj).__name__, obj.id)
-            # print ("-------->", self.__objects, "<-------")
+
+            """ print ("-------->", self.__objects, "<-------")
+                {'State.001b0278-a9df-4cdf-a71d-eb5fb88e1a70':
+                  <models.state.State object at 0x7f6e304abe80>} """
+
             if key in FileStorage.__objects.keys():
                 del FileStorage.__objects[key]
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
+        r_dict = {}
         if cls:
-            return {k: v for k, v in FileStorage.__objects.items() if type(v) == cls}
+            for k, v in FileStorage.__objects.items():
+                if type(v) == cls:
+                    r_dict[k] = v
+            return r_dict 
+
         else:
             return FileStorage.__objects
 

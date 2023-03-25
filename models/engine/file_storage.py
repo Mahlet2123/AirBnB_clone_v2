@@ -31,7 +31,7 @@ class FileStorage:
 
     def all(self, cls=None):
         """returns the dictionary __objects
-         currently in storage
+        currently in storage
         """
         r_dict = {}
         if cls:
@@ -44,7 +44,7 @@ class FileStorage:
 
     def delete(self, obj=None):
         """deletes obj from __objects if it's inside
-         Args: obj = given object
+        Args: obj = given object
         """
         if obj:
             key = "{}.{}".format(type(obj).__name__, obj.id)

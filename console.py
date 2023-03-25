@@ -18,7 +18,15 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = "(hbnb)"
 
-    classes = {'BaseModel': BaseModel, 'User': User, 'Place': Place, 'State': State, 'City': City, 'Amenity': Amenity, 'Review': Review}
+    classes = {
+        "BaseModel": BaseModel,
+        "User": User,
+        "Place": Place,
+        "State": State,
+        "City": City,
+        "Amenity": Amenity,
+        "Review": Review,
+    }
 
     def do_create(self, line):
         """Creates a new instance of BaseModel"""
@@ -40,7 +48,7 @@ class HBNBCommand(cmd.Cmd):
             cast = str
             if match:
                 value = match.group(1)
-                value = value.replace('_', ' ')
+                value = value.replace("_", " ")
             if not match:
                 value = param[1]
                 if "." in value:
@@ -54,10 +62,10 @@ class HBNBCommand(cmd.Cmd):
             param_key.append(param[0])
             param_value.append(value)
 
-        #new_instance = HBNBCommand.classes[args[0]]()
+        # new_instance = HBNBCommand.classes[args[0]]()
         new_instance = storage.classes_dict()[args[0]]()
         i = 0
-        while (i < count):
+        while i < count:
             setattr(new_instance, param_key[i], param_value[i])
             i = i + 1
 
@@ -141,7 +149,7 @@ class HBNBCommand(cmd.Cmd):
             attribute = m.group(3)
             value = m.group(4)
 
-            line_pattern2 = r'^(\S+)\s(\S+)\s(.*)'
+            line_pattern2 = r"^(\S+)\s(\S+)\s(.*)"
             m1 = re.search(line_pattern2, line)
             class_name = m1.group(1)
             class_id = m1.group(2)
@@ -182,11 +190,12 @@ class HBNBCommand(cmd.Cmd):
                                 return
                         if m1:
                             res = all_objs.update(json.loads(attr_dict))
-                            print (res)
+                            print(res)
                             all_objs[key].save()
                 print("** no instance found **")
 
         # --- Advanced tasks ---
+
     def do_count(self, line):
         """Retrieves the number of instances of a class
         Usage: <class name>.count()"""
@@ -206,17 +215,17 @@ class HBNBCommand(cmd.Cmd):
 
     def precmd(self, line):
         """precmd command that handles class cmds: <class name>.func()"""
-        pattern = r'^(\S+)\.(\S+)\((.*)\)'
+        pattern = r"^(\S+)\.(\S+)\((.*)\)"
         match = re.search(pattern, line)
         if match:
             classname, command, arg = match.groups()
-            #arg = arg.replace('"', "")
+            # arg = arg.replace('"', "")
             if "," in arg:
-                arg_pattern1 = r'^(\S+),\s(\S+),\s(\S+)'
+                arg_pattern1 = r"^(\S+),\s(\S+),\s(\S+)"
                 match1 = re.search(arg_pattern1, arg)
-                arg_pattern2 = r'^(\S+),\s(.*)'
+                arg_pattern2 = r"^(\S+),\s(.*)"
                 match2 = re.search(arg_pattern2, arg)
-                if match1:                    
+                if match1:
                     id, attr_name, value = match1.groups()
                     id = id.replace('"', "")
                     attr_name = attr_name.replace('"', "")

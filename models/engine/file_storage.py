@@ -33,12 +33,14 @@ class FileStorage:
         """returns the dictionary __objects
          currently in storage
         """
+        r_dict = {}
         if cls:
-            r_dict = {}
             for k, v in FileStorage.__objects.items():
                 if type(v) == cls:
                     r_dict[k] = v
-        return r_dict
+            return r_dict
+        else:
+            return FileStorage.__objects
 
     def delete(self, obj=None):
         """deletes obj from __objects if it's inside

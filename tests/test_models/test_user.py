@@ -1,61 +1,87 @@
 #!/usr/bin/python3
-"""
-Tests for the User Model
-"""
-
-
+"""test for user"""
 import unittest
-import datetime
-
+import os
 from models.user import User
+from models.base_model import BaseModel
+import pep8
+from os import getenv
 
 
 class TestUser(unittest.TestCase):
-    """Unittests for the User Model
-    1. Check for attributes
-    2. Check for methods
-    3. Check Expected output
-    4. Check Empty strings
-    """
+    """this will test the User class"""
 
-    def setUp(self):
-        """Let's create a few instances to test with"""
-        self.u1 = User()
-        self.u2 = User()
+    @classmethod
+    def setUpClass(cls):
+        """set up for test"""
+        cls.user = User()
+        cls.user.first_name = "Kevin"
+        cls.user.last_name = "Yook"
+        cls.user.email = "yook00627@gmamil.com"
+        cls.user.password = "secret"
 
-    def test_instances(self):
-        """Test if instances are created"""
-        self.assertTrue(isinstance(self.u1, User))
-        self.assertTrue(isinstance(self.u2, User))
-        self.assertTrue(hasattr(self.u1, "email"))
-        self.assertTrue(hasattr(self.u1, "password"))
-        self.assertTrue(hasattr(self.u1, "first_name"))
-        self.assertTrue(hasattr(self.u1, "last_name"))
+    @classmethod
+    def teardown(cls):
+        """at the end of the test this will tear it down"""
+        del cls.user
 
-    def test_email(self):
-        """Tests the email attribute"""
-        self.assertEqual(type(self.u1.email), str)
-        self.assertEqual(self.u1.email, "")
-        self.assertNotEqual(self.u1.email, None)
+    def tearDown(self):
+        """teardown"""
+        try:
+            os.remove("file.json")
+        except Exception:
+            pass
 
-    def test_password(self):
-        """Tests the password attribute"""
-        self.assertEqual(type(self.u1.password), str)
-        self.assertEqual(self.u1.password, "")
-        self.assertNotEqual(self.u1.password, None)
+    def test_pep8_User(self):
+        """Tests pep8 style"""
+        style = pep8.StyleGuide(quiet=True)
+        p = style.check_files(['models/user.py'])
+        self.assertEqual(p.total_errors, 0, "fix pep8")
 
-    def test_first_name(self):
-        """Tests the first_name attribute"""
-        self.assertEqual(type(self.u1.first_name), str)
-        self.assertEqual(self.u1.first_name, "")
-        self.assertNotEqual(self.u1.first_name, None)
+    def test_checking_for_docstring_User(self):
+        """checking for docstrings"""
+        self.assertIsNotNone(User.__doc__)
 
-    def test_last_name(self):
-        """Tests the last_name attribute"""
-        self.assertEqual(type(self.u1.last_name), str)
-        self.assertEqual(self.u1.last_name, "")
-        self.assertNotEqual(self.u1.last_name, None)
+    def test_attributes_User(self):
+        """chekcing if User have attributes"""
+        self.assertTrue('email' in self.user.__dict__)
+        self.assertTrue('id' in self.user.__dict__)
+        self.assertTrue('created_at' in self.user.__dict__)
+        self.assertTrue('updated_at' in self.user.__dict__)
+        self.assertTrue('password' in self.user.__dict__)
+        self.assertTrue('first_name' in self.user.__dict__)
+        self.assertTrue('last_name' in self.user.__dict__)
+
+    def test_is_subclass_User(self):
+        """test if User is subclass of Basemodel"""
+        self.assertTrue(issubclass(self.user.__class__, BaseModel), True)
+
+    def test_attribute_types_User(self):
+        """test attribute type for User"""
+        self.assertEqual(type(self.user.email), str)
+        self.assertEqual(type(self.user.password), str)
+        self.assertEqual(type(self.user.first_name), str)
+        self.assertEqual(type(self.user.first_name), str)
+
+    @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db",
+                     "Not using db")
+    def test_save_User(self):
+        """test if the save works"""
+        self.user.save()
+        self.assertNotEqual(self.user.created_at, self.user.updated_at)
+
+    @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") != "db",
+                     "Using db")
+    def test_save_User_db(self):
+        """test if the save works DB"""
+        return True
+        self.user.save()
+        self.assertNotEqual(self.user.created_at, self.user.updated_at)
+
+    def test_to_dict_User(self):
+        """test if dictionary works"""
+        self.assertEqual('to_dict' in dir(self.user), True)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

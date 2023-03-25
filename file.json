@@ -12,5 +12,18 @@
     "updated_at": "2023-03-25T11:02:34.002391",
     "name": "Nevada",
     "__class__": "State"
+  },
+  "User.d927f056-24c4-4cd8-b31c-0634ab32a348": {
+    "id": "d927f056-24c4-4cd8-b31c-0634ab32a348",
+    "created_at": "2023-03-25T11:37:08.854707",
+    "updated_at": "2023-03-25T11:37:08.854713",
+    "__class__": "User"
+  },
+  "State.ee84fe03-8d56-4b1b-814f-5c8e0d214c69": {
+    "id": "ee84fe03-8d56-4b1b-814f-5c8e0d214c69",
+    "created_at": "2023-03-25T11:54:24.032607",
+    "updated_at": "2023-03-25T11:54:24.032615",
+    "name": "adama",
+    "__class__": "State"
   }
 }

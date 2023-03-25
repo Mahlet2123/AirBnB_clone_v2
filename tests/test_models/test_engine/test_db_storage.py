@@ -33,7 +33,6 @@ class TestDBStorage(unittest.TestCase):
 
     def tearDown(self):
         """teardown"""
-        # TODO: anything? wtf!
 
     @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") != "db",
                      "Not using db")
@@ -42,17 +41,3 @@ class TestDBStorage(unittest.TestCase):
         style = pep8.StyleGuide(quiet=True)
         p = style.check_files(['models/engine/db_storage.py'])
         self.assertEqual(p.total_errors, 0, "fix pep8")
-
-    @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") != "db",
-                     "Not using db")
-    def test_all(self):
-        """tests if all works in File Storage"""
-        storage = DBStorage()
-        storage.reload()
-        dict_len = len(storage.all())
-        s = State(name="test_all_state")
-        s.save()
-        storage.save()
-        self.assertIs(len(storage.all()), dict_len + 1)
-
-

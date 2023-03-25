@@ -13,6 +13,7 @@ class User(BaseModel, Base):
         first_name: first name
         last_name: last name
     """
+
     __tablename__ = "users"
     email = Column(String(128), nullable=False)
     password = Column(String(128), nullable=False)
@@ -23,11 +24,13 @@ class User(BaseModel, Base):
         cascade="all,delete",
         backref=backref("user", cascade="all,delete"),
         passive_deletes=True,
-        single_parent=True)
+        single_parent=True,
+    )
 
     reviews = relationship(
         "Review",
         cascade="all,delete",
         backref=backref("user", cascade="all,delete"),
         passive_deletes=True,
-        single_parent=True)
+        single_parent=True,
+    )

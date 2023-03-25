@@ -194,8 +194,6 @@ class HBNBCommand(cmd.Cmd):
                             all_objs[key].save()
                 print("** no instance found **")
 
-        # --- Advanced tasks ---
-
     def do_count(self, line):
         """Retrieves the number of instances of a class
         Usage: <class name>.count()"""

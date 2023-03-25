@@ -11,38 +11,33 @@ from os import getenv
 from sqlalchemy import create_engine, MetaData
 
 
-class DBStorage():
-    """ This class comprises the ORM methods that helps us
-    to interact with our detabase """
+class DBStorage:
+    """This class comprises the ORM methods that helps us
+    to interact with our detabase"""
 
-    __classNames = [
-            User,
-            State,
-            City,
-            Place,
-            Amenity,
-            Review
-            ]
+    __classNames = [User, State, City, Place, Amenity, Review]
 
     __engine = None
     __session = None
 
     def __init__(self):
-        """ This is how we get conneted to the database.
+        """This is how we get conneted to the database.
         The four environmental variables are used for
-        robust security """
+        robust security"""
 
         self.__engine = create_engine(
-            'mysql+mysqldb://{}:{}@{}:3306/{}'
-            .format(getenv("HBNB_MYSQL_USER"),
-                    getenv("HBNB_MYSQL_PWD"),
-                    getenv("HBNB_MYSQL_HOST"),
-                    getenv("HBNB_MYSQL_DB")),
-            pool_pre_ping=True)
+            "mysql+mysqldb://{}:{}@{}:3306/{}".format(
+                getenv("HBNB_MYSQL_USER"),
+                getenv("HBNB_MYSQL_PWD"),
+                getenv("HBNB_MYSQL_HOST"),
+                getenv("HBNB_MYSQL_DB"),
+            ),
+            pool_pre_ping=True,
+        )
 
     def all(self, cls=None):
-        #query to fetch all objects related to cls if cls
-        #is not None. Otherwise fetch all
+        # query to fetch all objects related to cls if cls
+        # is not None. Otherwise fetch all
         obj_dict = {}
 
         if cls:
@@ -50,35 +45,39 @@ class DBStorage():
         else:
             for key in DBStorage.__classNames:
                 for row in self.__session.query(key):
-                    obj_dict.update({'{}.{}'.
-                                    format(type(row).__name__, row.id,): row})
+                    obj_dict.update(
+                        {
+                            "{}.{}".format(
+                                type(row).__name__,
+                                row.id,
+                            ): row
+                        }
+                    )
         return obj_dict
 
     def new(self, obj):
-        """ Adding the obj to the database """
+        """Adding the obj to the database"""
         self.__session.add(obj)
 
     def save(self):
-        """ commiting all changes to a database """
+        """commiting all changes to a database"""
         self.__session.commit()
 
     def delete(self, obj=None):
-        """ Delete a session object if not None """
+        """Delete a session object if not None"""
         if obj:
             self.__session.delete(obj)
 
     def reload(self):
-        """ To Create all the tables on the database """
+        """To Create all the tables on the database"""
         from sqlalchemy.orm import sessionmaker
+
         Base.metadata.create_all(self.__engine)
-        Session = sessionmaker(
-                bind=self.__engine, expire_on_commit=False
-                )
+        Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         self.__session = Session()
 
     def close(self):
-        """ calls remove()
-        """
+        """calls remove()"""
         self.__session.close()
 
     def classes_dict(self):

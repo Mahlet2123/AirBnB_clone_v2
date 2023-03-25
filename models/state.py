@@ -11,6 +11,7 @@ class State(BaseModel, Base):
     Attributes:
         name: input name
     """
+
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
     cities = relationship(
@@ -18,13 +19,16 @@ class State(BaseModel, Base):
         cascade="all,delete,delete-orphan",
         backref=backref("state", cascade="all,delete"),
         passive_deletes=True,
-        single_parent=True)
+        single_parent=True,
+    )
 
     if getenv("HBNB_TYPE_STORAGE") != "db":
+
         @property
         def cities(self):
             """returns list of City instances with state_id"""
             from models import storage
             from models import City
+
             return [v for k, v in storage.all(City).items()
                     if v.state_id == self.id]

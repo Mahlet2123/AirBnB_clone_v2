@@ -50,4 +50,4 @@ class TestDBStorage(unittest.TestCase):
         s = State(name="test_all_state")
         s.save()
         storage.save()
-        self.assertIs(len(storage.all()), dict_len - 1)
+        self.assertIs(len(storage.all()), dict_len + 1)

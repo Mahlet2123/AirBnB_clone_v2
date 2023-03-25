@@ -1,18 +1,18 @@
 #!/usr/bin/python3
-""" User module"""
+"""This is the city class"""
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship, backref
 
 
 class City(BaseModel, Base):
-    """class City that inherits from BaseModel and Base"""
-
+    """This is the class for City
+    Attributes:
+        state_id: The state id
+        name: input name
+    """
     __tablename__ = "cities"
     name = Column(String(128), nullable=False)
-    state_id = Column(
-        String(60), ForeignKey("states.id", ondelete="CASCADE"), nullable=False
-    )
-
-    # state_id = ""
-    # name = ""
+    state_id = Column(String(60),
+                      ForeignKey("states.id", ondelete="CASCADE"),
+                      nullable=False)

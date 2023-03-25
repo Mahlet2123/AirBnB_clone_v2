@@ -29,9 +29,26 @@ class FileStorage:
         "Review": Review,
     }
 
-    def all(self):
+    def all(self, cls=None):
         """returns the dictionary __objects"""
-        return self.__objects
+        if cls:
+            r_dict = {}
+            for k, v in FileStorage.__objects.items():
+                if type(v) == cls:
+                    r_dict[k] = v
+        return r_dict
+
+    def delete(self, obj=None):
+        """deletes obj from __objects if it's inside
+         Args: obj = given object
+        """
+        if obj:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            """ print ("-------->", self.__objects, "<-------")
+                {'State.001b0278-a9df-4cdf-a71d-eb5fb88e1a70':
+                  <models.state.State object at 0x7f6e304abe80>} """
+            if key in FileStorage.__objects.keys():
+                del FileStorage.__objects[key]
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""

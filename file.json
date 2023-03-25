@@ -35,5 +35,19 @@
     "updated_at": "2023-03-25T07:27:23.637724",
     "name": "Califo\"rnia",
     "__class__": "State"
+  },
+  "State.574b09ae-7e95-4683-a57b-23af87f684c7": {
+    "id": "574b09ae-7e95-4683-a57b-23af87f684c7",
+    "created_at": "2023-03-25T10:58:24.405684",
+    "updated_at": "2023-03-25T10:58:24.405684",
+    "name": "California",
+    "__class__": "State"
+  },
+  "State.1f79eecb-3a31-45c0-8e5a-00d85d543259": {
+    "id": "1f79eecb-3a31-45c0-8e5a-00d85d543259",
+    "created_at": "2023-03-25T10:58:24.406125",
+    "updated_at": "2023-03-25T10:58:24.406125",
+    "name": "Nevada",
+    "__class__": "State"
   }
 }

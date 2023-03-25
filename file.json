@@ -1,52 +1,15 @@
 {
-  "User.134d3050-acb4-4153-8679-d7a46a9814e7": {
-    "id": "134d3050-acb4-4153-8679-d7a46a9814e7",
-    "created_at": "2023-03-25T07:25:29.877462",
-    "updated_at": "2023-03-25T07:25:29.877477",
-    "__class__": "User"
-  },
-  "User.f8eb3700-8655-469d-a2fd-280a16fd58ed": {
-    "id": "f8eb3700-8655-469d-a2fd-280a16fd58ed",
-    "created_at": "2023-03-25T07:25:43.280063",
-    "updated_at": "2023-03-25T07:25:43.280079",
-    "name": "alem",
-    "__class__": "User"
-  },
-  "User.e0666da6-3415-4c7a-8c67-5c966219c154": {
-    "id": "e0666da6-3415-4c7a-8c67-5c966219c154",
-    "created_at": "2023-03-25T07:26:28.372304",
-    "updated_at": "2023-03-25T07:26:28.372327",
-    "name": "mahlet",
-    "age": "25",
-    "status": "single",
-    "phone": "+251",
-    "__class__": "User"
-  },
-  "State.f5118c81-c0bb-4e5f-8d15-dc1c1eba2e36": {
-    "id": "f5118c81-c0bb-4e5f-8d15-dc1c1eba2e36",
-    "created_at": "2023-03-25T07:27:13.245323",
-    "updated_at": "2023-03-25T07:27:13.245339",
-    "name": "Califo rnia",
-    "__class__": "State"
-  },
-  "State.131f38b2-b16e-46e4-a1bd-96cbbf03a9ea": {
-    "id": "131f38b2-b16e-46e4-a1bd-96cbbf03a9ea",
-    "created_at": "2023-03-25T07:27:23.637710",
-    "updated_at": "2023-03-25T07:27:23.637724",
-    "name": "Califo\"rnia",
-    "__class__": "State"
-  },
-  "State.574b09ae-7e95-4683-a57b-23af87f684c7": {
-    "id": "574b09ae-7e95-4683-a57b-23af87f684c7",
-    "created_at": "2023-03-25T10:58:24.405684",
-    "updated_at": "2023-03-25T10:58:24.405684",
+  "State.ac07780e-7ca5-4020-9216-f6792e8c2ab5": {
+    "id": "ac07780e-7ca5-4020-9216-f6792e8c2ab5",
+    "created_at": "2023-03-25T11:02:33.911350",
+    "updated_at": "2023-03-25T11:02:33.911350",
     "name": "California",
     "__class__": "State"
   },
-  "State.1f79eecb-3a31-45c0-8e5a-00d85d543259": {
-    "id": "1f79eecb-3a31-45c0-8e5a-00d85d543259",
-    "created_at": "2023-03-25T10:58:24.406125",
-    "updated_at": "2023-03-25T10:58:24.406125",
+  "State.fb7ea2a8-7fc9-4e1b-8f21-3364c180f7bd": {
+    "id": "fb7ea2a8-7fc9-4e1b-8f21-3364c180f7bd",
+    "created_at": "2023-03-25T11:02:34.002391",
+    "updated_at": "2023-03-25T11:02:34.002391",
     "name": "Nevada",
     "__class__": "State"
   }

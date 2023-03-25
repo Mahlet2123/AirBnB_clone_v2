@@ -30,7 +30,9 @@ class FileStorage:
     }
 
     def all(self, cls=None):
-        """returns the dictionary __objects"""
+        """returns the dictionary __objects
+         currently in storage
+        """
         if cls:
             r_dict = {}
             for k, v in FileStorage.__objects.items():

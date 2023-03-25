@@ -5,6 +5,12 @@ import uuid
 import models
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 import re
 
 
@@ -13,16 +19,51 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = "(hbnb)"
 
+    classes = {'BaseModel': BaseModel, 'User': User, 'Place': Place, 'State': State, 'City': City, 'Amenity': Amenity, 'Review': Review}
+
     def do_create(self, line):
         """Creates a new instance of BaseModel"""
+        args = line.split(" ")
         if line == "" or line is None:
             print("** class name missing **")
-        elif line not in storage.classes_dict():
+            return
+        elif args[0] not in storage.classes_dict():
             print("** class doesn't exist **")
-        else:
-            base1 = storage.classes_dict()[line]()
-            base1.save()
-            print(base1.id)
+            return
+        count = 0
+        param_key = []
+        param_value = []
+
+        for param in args[1:]:
+            param = param.split("=")
+            count = count + 1
+            match = re.search('^"(.*)"$', param[1])
+            cast = str
+            if match:
+                value = match.group(1)
+                value = value.replace('_', ' ')
+            if not match:
+                value = param[1]
+                if "." in value:
+                    cast = float
+                else:
+                    cast = int
+                try:
+                    value = cast(value)
+                except ValueError:
+                    pass
+            param_key.append(param[0])
+            param_value.append(value)
+
+        #new_instance = HBNBCommand.classes[args[0]]()
+        new_instance = storage.classes_dict()[args[0]]()
+        i = 0
+        while (i < count):
+            setattr(new_instance, param_key[i], param_value[i])
+            i = i + 1
+
+        new_instance.save()
+        print(new_instance.id)
 
     def do_show(self, line):
         """Prints the string representation of an instance"""

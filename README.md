@@ -62,6 +62,7 @@ EOF  all  count  create  destroy  help  quit  show  update
 - map your models to a table in database by using an O.R.M.
 
 # Third step: It’s time to make the work public!
+'0x03. AirBnB clone - Deploy static'
 
 - Deploying web_static work. Used Fabric (for Python3).
 - Fabric is a Python library and command-line tool for streamlining the use of SSH for application deployment or systems administration tasks.

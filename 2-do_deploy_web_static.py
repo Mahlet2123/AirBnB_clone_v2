@@ -26,7 +26,7 @@ def do_deploy(archive_path):
     # Extract the archive to /data/web_static/releases/<archive
     # filename without extension> on the web server
     a_filename = archive_path.split("/")[-1]
-    filename = archive_filename.split(".")[0]
+    filename = a_filename.split(".")[0]
     archive_path_no_ext = "/data/web_static/releases/{}".format(filename)
     run("sudo mkdir -p {}".format(archive_path_no_ext))
     run(
@@ -39,7 +39,8 @@ def do_deploy(archive_path):
             filename, filename
         )
     )
-    run("sudo rm /tmp/{}".format(archive_filename))
+    run("sudo rm -rf /data/web_static/releases/{}/web_static".format(filename))
+    run("sudo rm /tmp/{}".format(a_filename))
 
     # Delete the symbolic link /data/web_static/current from the web server
     run("sudo rm -f /data/web_static/current")

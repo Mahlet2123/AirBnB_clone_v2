@@ -9,9 +9,10 @@ def do_pack():
 	folder_name = 'web_static'
 	time = datetime.now().strftime('%Y%m%d%H%M%S')
 	archive_path = 'versions/web_static_{}.tgz'.format(time)
-	if not os.path.exists('versions'):
+	if not os.path.exists('versions/'):
 		local('mkdir -p versions')
-	result = local('tar -czvf {} {}'.format(archive_path, folder_name))
-	if result.failed:
+	result = 'tar -czvf {} web_static'.format(archive_path)
+	tar_file = local(result)
+	if tar_file.failed:
 		return None
 	return archive_path

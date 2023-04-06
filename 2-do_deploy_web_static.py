@@ -7,7 +7,7 @@ from os.path import exists
 from fabric.api import env, put, run
 
 
-env.hosts = ['54.90.3.149', '75.101.217.125']
+env.hosts = ['54.172.89.19', '75.101.217.125']
 env.user = 'ubuntu'
 env.key_filename = '/root/.ssh/id_rsa'
 env.use_ssh_config = True
@@ -27,15 +27,17 @@ def do_deploy(archive_path):
     # filename without extension> on the web server
     archive_filename = archive_path.split('/')[-1]
     archive_path_no_ext = "/data/web_static/releases/" + archive_filename.split('.')[0]
+    filename = archive_filename.split('.')[0]
     run("sudo mkdir -p {}".format(archive_path_no_ext))
     run("sudo tar -xzf /tmp/{} -C {}/".format(archive_filename, archive_path_no_ext), shell=True)
+    run("sudo mv /data/web_static/releases/{}/web_static/* /data/web_static/releases/{}/".format(filename, filename))
     run("sudo rm /tmp/{}".format(archive_filename))
 
     # Delete the symbolic link /data/web_static/current from the web server
     run("sudo rm -f /data/web_static/current")
 
     # Create a new symbolic link /data/web_static/current on the web server, linked to the new version of your code
-    c.run("ln -s {} /data/web_static/current".format(archive_path_no_ext))
+    run("ln -s {} /data/web_static/current".format(archive_path_no_ext))
 
     print("New version deployed!")
     return True	

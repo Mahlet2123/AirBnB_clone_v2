@@ -4,6 +4,8 @@ that distributes an archive to your web servers,
 using the function do_deploy """
 from os.path import exists
 from fabric.api import *
+#from fabric import Connection
+from fabric.connection import Connection
 
 
 env.hosts = ['54.90.3.149', '75.101.217.125']
@@ -11,27 +13,28 @@ env.user = 'ubuntu'
 
 def do_deploy(archive_path):
     """ distributes an archive to your web servers """
+    c = Connection(host=env.hosts, user=env.user)
     if not exists(archive_path):
         return False
 
     # Upload the archive to the
     # /tmp/ directory of the web server
     # put(local_path, remote_path)
-    put(archive_path, "/tmp/")
+    c.put(archive_path, "/tmp/")
 
     # Extract the archive to /data/web_static/releases/<archive
     # filename without extension> on the web server
     archive_filename = archive_path.split('/')[-1]
     archive_path_no_ext = "/data/web_static/releases/" + archive_filename.split('.')[0]
-    run("mkdir -p {}".format(archive_path_no_ext))
-    run("tar -xzf /tmp/{} -C {}/".format(archive_filename, archive_path_no_ext))
-    run("rm /tmp/{}".format(archive_filename))
+    c.run("mkdir -p {}".format(archive_path_no_ext))
+    c.run("tar -xzf /tmp/{} -C {}/".format(archive_filename, archive_path_no_ext))
+    c.run("rm /tmp/{}".format(archive_filename))
 
     # Delete the symbolic link /data/web_static/current from the web server
-    run("rm -f /data/web_static/current")
+    c.run("rm -f /data/web_static/current")
 
     # Create a new symbolic link /data/web_static/current on the web server, linked to the new version of your code
-    run("ln -s {} /data/web_static/current".format(archive_path_no_ext))
+    c.run("ln -s {} /data/web_static/current".format(archive_path_no_ext))
 
     print("New version deployed!")
     return True	

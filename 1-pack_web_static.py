@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Fabfile to create a .tgz archive"""
 from datetime import datetime
-from fabric import Connection
 from fabric.api import local
 
 

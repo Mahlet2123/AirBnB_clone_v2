@@ -55,7 +55,7 @@ def do_deploy(archive_path):
     if tar_file.failed:
         return False
     tar_file = run("rm -rf /data/web_static/releases/{}/web_static".format(
-        name))
+                name))
     if tar_file.failed:
         return False
     tar_file = run("rm -rf /data/web_static/current")
@@ -81,17 +81,24 @@ def deploy():
     tar_file = do_deploy(archive)
     return tar_file
 
+
 def do_clean(number=0):
-    """ deletes out-of-date archives, using the function do_clean """
+    """deletes out-of-date archives, using the function do_clean"""
     number = int(number)
     if number < 1:
-        """ keep only the most recent version"""
+        """keep only the most recent version"""
         number = 1
     number += 1
     number = str(number)
     with lcd("versions"):
-        local("ls -1t | grep web_static_.*\.tgz | tail -n +" +
-              number + " | xargs -I {} rm -- {}")
+        local(
+            "ls -1t | grep web_static_.* | tail -n +"
+            + number
+            + " | xargs -I {} rm -- {}"
+        )
     with cd("/data/web_static/releases"):
-        run("ls -1t | grep web_static_ | tail -n +" +
-            number + " | xargs -I {} sudo rm -rf -- {}")
+        run(
+            "ls -1t | grep web_static_ | tail -n +"
+            + number
+            + " | xargs -I {} sudo rm -rf -- {}"
+        )

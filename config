@@ -1,4 +1,0 @@
-Host myserver
-    Hostname 54.90.3.149
-    User ubuntu
-    IdentityFile ~/.ssh/id_rsa

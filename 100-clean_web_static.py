@@ -92,7 +92,7 @@ def do_clean(number=0):
     number = str(number)
     with lcd("versions"):
         local(
-            "ls -1t | grep web_static_.* | tail -n +"
+            "ls -1t | grep web_static_.*tgz | tail -n +"
             + number
             + " | xargs -I {} rm -- {}"
         )

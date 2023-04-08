@@ -87,25 +87,11 @@ def do_clean(number=0):
     if number < 1:
         """ keep only the most recent version"""
         number = 1
-    """
-    with cd("/data/web_static/releases"):
-        archives = sorted(run("ls -xtr").split())
-        archives_to_delete = archives[:-number]
-        if len(archives_to_delete) > 0:
-            for archive in archives_to_delete:
-                run("rm -rf {}".format(archive))
-
-    with cd("/data/web_static/versions"):
-        archives = sorted(run("ls -xtr").split())
-        archives_to_delete = archives[:-number]
-        if len(archives_to_delete) > 0:
-            for archive in archives_to_delete:
-                run("rm -rf {}".format(archive))
-    """
-        number = str(number)
+    number += 1
+    number = str(number)
     with lcd("versions"):
         local("ls -1t | grep web_static_.*\.tgz | tail -n +" +
               number + " | xargs -I {} rm -- {}")
     with cd("/data/web_static/releases"):
         run("ls -1t | grep web_static_ | tail -n +" +
-            number + " | xargs -I {} rm -rf -- {}")
+            number + " | xargs -I {} sudo rm -rf -- {}")

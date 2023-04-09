@@ -1,23 +1,19 @@
-# sets up your web servers for the deployment of web_static.
+#sets up your web servers for the deployment of web_static.
+
+exec {'/usr/bin/env apt-get -y update':}
+exec {'/usr/bin/env apt-get -y install nginx':}
 
 package { 'nginx':
   ensure => installed,
 }
 
 # Create required directories if they don't already exist
-file { '/data/web_static/shared/':
-  ensure => 'directory',
-  mode   => '0755',
-}
-
-file { '/data/web_static/releases/test/':
-  ensure => 'directory',
-  mode   => '0755',
-}
+exec { '/usr/bin/env sudo mkdir -p /data/web_static/releases/test/':}
+exec { '/usr/bin/env sudo mkdir -p /data/web_static/shared/':}
 
 # Create index.html file with random content
 file { '/data/web_static/releases/test/index.html':
-  ensure  => 'filie',
+  ensure  => 'file',
   content => '<html><head></head><body>Holberton School</body></html>',
   mode    => '0755'
 }

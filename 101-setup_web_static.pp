@@ -7,19 +7,19 @@ package { 'nginx':
 # Create required directories if they don't already exist
 file { '/data/web_static/shared/':
   ensure => 'directory',
-  mode   => '755',
+  mode   => '0755',
 }
 
 file { '/data/web_static/releases/test/':
   ensure => 'directory',
-  mode   => '755',
+  mode   => '0755',
 }
 
 # Create index.html file with random content
 file { '/data/web_static/releases/test/index.html':
   ensure  => 'filie',
   content => '<html><head></head><body>Holberton School</body></html>',
-  mode    => '755'
+  mode    => '0755'
 }
 
 # Create a symbolic link /data/web_static/current linked to the

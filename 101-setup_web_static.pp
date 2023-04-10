@@ -18,8 +18,8 @@ file {'/data/web_static/current':
 exec {'add new configuration to NGINX':
   command => '/usr/bin/env sed -i "/listen 80 default_server;/a location /hbnb_static/ { alias /data/web_static/current/;}" /etc/nginx/sites-available/default',
 } -> 
-exec {'set ownership of /data/ to ubuntu user':
-  command => '/usr/bin/env chown -R ubuntu:ubuntu /data',
+exec {'ownership':
+  command => '/usr/bin/env chown -R ubuntu:ubuntu /data/',
 } -> 
 exec {'restart nginx':
   command => '/usr/bin/env service nginx restart',

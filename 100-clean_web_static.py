@@ -93,12 +93,10 @@ def do_clean(number=0):
     with lcd("versions"):
         local(
             "ls -1t | grep web_static_.*tgz | tail -n +"
-            + number
-            + " | xargs -I {} rm -- {}"
+            + number + " | xargs -I {} rm -- {}"
         )
     with cd("/data/web_static/releases"):
         run(
             "ls -1t | grep web_static_ | tail -n +"
-            + number
-            + " | xargs -I {} sudo rm -rf -- {}"
+            + number + " | xargs -I {} sudo rm -rf -- {}"
         )

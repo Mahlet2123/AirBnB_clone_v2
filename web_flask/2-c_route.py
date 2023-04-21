@@ -22,7 +22,7 @@ def hbnb():
 @app.route("/c/<text>", strict_slashes=False)
 def c(text):
     """Handles the root/c/<text> url"""
-    return f"C {escape(text).replace('_', ' ')}"
+    return "C {}".format(escape(text).replace('_', ' '))
 
 
 if __name__ == "__main__":

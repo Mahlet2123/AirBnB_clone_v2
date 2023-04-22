@@ -1,14 +1,6 @@
 # AirBnB_clone
 <img src="hbnb.png" width=100%>
 
-## Description
-
-# First step: Write a command interpreter to manage your AirBnB objects.
-'0x00. AirBnB clone - The console' group project.
-
-The first step towards building our first full web application: the AirBnB clone:
-	- HTML/CSS templating, database storage, API, front-end integration…
-
 ## Table of Contents
  * [Description](#Description)
  * [Usage](#Usage)
@@ -16,6 +8,14 @@ The first step towards building our first full web application: the AirBnB clone
  * [Bugs](#Bugs)
  * [Authors](#Authors)
  * [Licences](#Licences)
+ 
+## Description
+
+# First step: Write a command interpreter to manage your AirBnB objects.
+'0x00. AirBnB clone - The console' group project.
+
+The first step towards building our first full web application: the AirBnB clone:
+	- HTML/CSS templating, database storage, API, front-end integration…
 
 ## Usage
 To use this application:

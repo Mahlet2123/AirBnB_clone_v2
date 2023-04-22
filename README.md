@@ -67,6 +67,11 @@ EOF  all  count  create  destroy  help  quit  show  update
 - Deploying web_static work. Used Fabric (for Python3).
 - Fabric is a Python library and command-line tool for streamlining the use of SSH for application deployment or systems administration tasks.
 
+# Fourth step: Web framework - templating
+'0x04. AirBnB clone - Web framework'
+
+- The first web server in Python
+- static HTML file made dynamic by using objects stored in a file or database
 
 ##  Bugs
 - No known bugs

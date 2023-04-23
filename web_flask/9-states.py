@@ -17,7 +17,10 @@ def cities_by_states():
 @app.route("/states/<id>", strict_slashes=False)
 def states_by_id(id):
     """ for fetching data from the storage engine by id """
-    states = list(storage.all(State).values())
+    all_states = list(storage.all(State).values())
+    for state in all_states:
+        if (state.id == id):
+            states = state
     return render_template("9-states.html", states=states, id=id)
 
 @app.teardown_appcontext

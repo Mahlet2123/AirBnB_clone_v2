@@ -7,3 +7,5 @@ main.py
 file.json
 ignore_TESTS/
 *.swp
+*.swo
+*.swn

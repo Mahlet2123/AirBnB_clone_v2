@@ -11,6 +11,7 @@ app = Flask(__name__)
 def states_list():
     """ for fetching data from the storage engine """
     states = list(storage.all(State).values())
+    # states list contains all State objects stored in the database.
     return render_template("7-states_list.html", states=states)
 
 @app.teardown_appcontext

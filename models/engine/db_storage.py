@@ -38,22 +38,14 @@ class DBStorage:
     def all(self, cls=None):
         # query to fetch all objects related to cls if cls
         # is not None. Otherwise fetch all
-        obj_dict = {}
+        rows = []
 
         if cls:
-            obj_dict.update(session.query(cls))
+            rows = self.__session.query(cls)
         else:
             for key in DBStorage.__classNames:
-                for row in self.__session.query(key):
-                    obj_dict.update(
-                        {
-                            "{}.{}".format(
-                                type(row).__name__,
-                                row.id,
-                            ): row
-                        }
-                    )
-        return obj_dict
+                rows += self.__session.query(cls)
+        return {type(v).__name__ + "." + v.id: v for v in rows}
 
     def new(self, obj):
         """Adding the obj to the database"""

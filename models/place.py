@@ -44,9 +44,9 @@ class Place(BaseModel, Base):
     """
 
     __tablename__ = "places"
-    city_id = Column(
+    """city_id = Column(
         String(60), ForeignKey("cities.id", ondelete="CASCADE"), nullable=False
-    )
+    )"""
     user_id = Column(
         String(60), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )

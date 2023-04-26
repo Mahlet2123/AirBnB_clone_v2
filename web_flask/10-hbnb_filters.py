@@ -3,6 +3,7 @@
 from flask import Flask, render_template
 from models import storage
 from models.state import State
+from models.amenity import Amenity
 
 
 app = Flask(__name__)
@@ -11,8 +12,8 @@ app = Flask(__name__)
 def filters():
     """ for fetching data from the storage engine """
     states = list(storage.all(State).values())
-    # states list contains all State objects stored in the database.
-    return render_template("10-hbnb_filters.html", states=states)
+    amenities = list(storage.all(Amenity).values())
+    return render_template("10-hbnb_filters.html", states=states, amenities=amenities)
 
 @app.teardown_appcontext
 def teardown_db(exception):

@@ -84,7 +84,7 @@ class HBNBCommand(cmd.Cmd):
             elif len(class_atr) == 1:
                 print("** instance id missing **")
             else:
-                key = f"{class_atr[0]}.{class_atr[1]}"
+                key = "{}.{}".format(class_atr[0], class_atr[1])
                 all_objs = storage.all()
                 for k in all_objs.keys():
                     if k == key:

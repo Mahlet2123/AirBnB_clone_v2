@@ -17,13 +17,14 @@ if getenv("HBNB_TYPE_STORAGE") == "db":
             primary_key=True,
             nullable=False,
         ),
+        """
         Column(
             "amenity_id",
             String(60),
             ForeignKey("amenities.id"),
             primary_key=True,
             nullable=False,
-        ),
+        ),"""
     )
 
 
@@ -67,13 +68,13 @@ class Place(BaseModel, Base):
             backref=backref("place", cascade="all,delete"),
             passive_deletes=True,
         )
-
+        """
         amenities = relationship(
             "Amenity",
             secondary="place_amenity",
             viewonly=False,
             back_populates="place_amenities",
-        )
+        )"""
 
     else:
 

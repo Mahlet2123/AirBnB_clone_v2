@@ -8,10 +8,25 @@ from console import HBNBCommand
 from io import StringIO
 from unittest.mock import patch
 import pycodestyle
+from models.base_model import BaseModel
 
 
 class TestConsole(unittest.TestCase):
     """Class for testing the console module"""
+   
+    #def setUp(self):
+    """
+    To redirect the stdout to a buffer in memory 
+    io.StringIO(), which provides a buffer for capturing
+    the standard output of the code being tested
+    """
+    #self.stdout = io.stringIO()
+    #sys.stdout = self.stdout
+
+    #def tearDown(self):
+    """ restores the stdout to original value"""
+    #sys.stdout = sys.__stdout___
+
     def test_console_conformity_pycode(self):
         """Tests console.py's adherence to pycodestyle."""
         pycode = pycodestyle.StyleGuide(quiet=True)
@@ -25,6 +40,18 @@ class TestConsole(unittest.TestCase):
                          "console.py needs a docstring")
         self.assertTrue(len(console.__doc__) >= 1,
                         "console.py needs a docstring")
+
+    def test_help(self):
+        """Tests help command."""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("help")
+        s = """
+Documented commands (type help <topic>):
+========================================
+EOF  all  count  create  destroy  help  quit  show  update
+
+"""
+        self.assertEqual(s, f.getvalue())
 
     def test_help_EOF(self):
         """Tests the help EOF command."""

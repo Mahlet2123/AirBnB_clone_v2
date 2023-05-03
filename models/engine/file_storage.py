@@ -3,12 +3,6 @@
 
 import json
 from models.base_model import BaseModel
-from models.user import User
-from models.place import Place
-from models.city import City
-from models.amenity import Amenity
-from models.state import State
-from models.review import Review
 
 
 class FileStorage:
@@ -19,40 +13,20 @@ class FileStorage:
 
     __file_path = "file.json"
     __objects = {}
-    public_dict = {
-        "BaseModel": BaseModel,
-        "User": User,
-        "Place": Place,
-        "State": State,
-        "City": City,
-        "Amenity": Amenity,
-        "Review": Review,
-    }
 
     def all(self, cls=None):
-        """returns the dictionary __objects
-        currently in storage
         """
-        r_dict = {}
+        if cls is not None, 
+        returns the list of objects of type of cls.
+        returns the dictionary __objects
+        """
+        new_dict = {}
         if cls:
-            for k, v in FileStorage.__objects.items():
-                if type(v) == cls:
-                    r_dict[k] = v
-            return r_dict
-        else:
-            return FileStorage.__objects
-
-    def delete(self, obj=None):
-        """deletes obj from __objects if it's inside
-        Args: obj = given object
-        """
-        if obj:
-            key = "{}.{}".format(type(obj).__name__, obj.id)
-            """ print ("-------->", self.__objects, "<-------")
-                {'State.001b0278-a9df-4cdf-a71d-eb5fb88e1a70':
-                  <models.state.State object at 0x7f6e304abe80>} """
-            if key in FileStorage.__objects.keys():
-                del FileStorage.__objects[key]
+            for key, value in FileStorage.__objects.items():
+                if cls == type(value):
+                    new_dict[key] = value
+            return new_dict
+        return self.__objects
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
@@ -100,13 +74,18 @@ class FileStorage:
                 reload_dict = json.load(r)
             for key, value in reload_dict.items():
                 # obj = FileStorage.public_dict[value["__class__"]](**value)
-                obj = eval(value["__class__"])(**value)
+                obj = self.classes_dict()[value["__class__"]](**value)
                 FileStorage.__objects[key] = obj
         except FileNotFoundError:
             pass
 
-    def close(self):
+    def delete(self, obj=None):
         """
-        call reload() method for deserializing the JSON file to objects
+        to delete obj from __objects if it’s inside -
+        if obj is equal to None, the method should not do anything
         """
-        FileStorage.reload()
+        if obj:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            for object_del in list(FileStorage.__objects.keys()):
+                if key == object_del:
+                    del FileStorage.__objects[key]

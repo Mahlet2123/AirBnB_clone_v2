@@ -2,14 +2,9 @@
 """ the entry point of the command interpreter """
 import cmd
 import uuid
+import models
 from models.base_model import BaseModel
 from models import storage
-from models.user import User
-from models.place import Place
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.review import Review
 import re
 
 
@@ -17,16 +12,6 @@ class HBNBCommand(cmd.Cmd):
     """the HBNBCommand class"""
 
     prompt = "(hbnb)"
-
-    classes = {
-        "BaseModel": BaseModel,
-        "User": User,
-        "Place": Place,
-        "State": State,
-        "City": City,
-        "Amenity": Amenity,
-        "Review": Review,
-    }
 
     def do_create(self, line):
         """Creates a new instance of BaseModel"""
@@ -61,8 +46,6 @@ class HBNBCommand(cmd.Cmd):
                     pass
             param_key.append(param[0])
             param_value.append(value)
-
-        # new_instance = HBNBCommand.classes[args[0]]()
         new_instance = storage.classes_dict()[args[0]]()
         i = 0
         while i < count:
@@ -84,7 +67,7 @@ class HBNBCommand(cmd.Cmd):
             elif len(class_atr) == 1:
                 print("** instance id missing **")
             else:
-                key = "{}.{}".format(class_atr[0], class_atr[1])
+                key = f"{class_atr[0]}.{class_atr[1]}"
                 all_objs = storage.all()
                 for k in all_objs.keys():
                     if k == key:
@@ -104,7 +87,7 @@ class HBNBCommand(cmd.Cmd):
             elif len(class_atr) == 1:
                 print("** instance id missing **")
             else:
-                key = f"{class_atr[0]}.{class_atr[1]}"
+                key = "{}.{}".format(class_atr[0], class_atr[1])
                 all_objs = storage.all()
                 for k in all_objs.keys():
                     if k == key:
@@ -144,23 +127,25 @@ class HBNBCommand(cmd.Cmd):
             line_pattern1 = r'^(\S+)(?:\s(\S+)(?:\s(\S+)(?:\s((?:"[^"]*")|\
                           (?:(\S)+)))?)?)?'
             m = re.search(line_pattern1, line)
-            class_name = m.group(1)
-            class_id = m.group(2)
-            attribute = m.group(3)
-            value = m.group(4)
+            if m:
+                class_name = m.group(1)
+                class_id = m.group(2)
+                attribute = m.group(3)
+                value = m.group(4)
 
-            line_pattern2 = r"^(\S+)\s(\S+)\s(.*)"
+            line_pattern2 = r'^(\S+)\s(\S+)\s(.*)'
             m1 = re.search(line_pattern2, line)
-            class_name = m1.group(1)
-            class_id = m1.group(2)
-            attr_dict = m1.group(3)
+            if m1:
+                class_name = m1.group(1)
+                class_id = m1.group(2)
+                attr_dict = m1.group(3)
 
             if class_name not in storage.classes_dict():
                 print("** class doesn't exist **")
             elif class_id is None:
                 print("** instance id missing **")
             else:
-                key = f"{class_name}.{class_id}"
+                key = "{}.{}".format(class_name, class_id)
                 all_objs = storage.all()
                 for k in all_objs.keys():
                     if k == key:
@@ -193,6 +178,8 @@ class HBNBCommand(cmd.Cmd):
                             print(res)
                             all_objs[key].save()
                 print("** no instance found **")
+
+    # --- Advanced tasks ---
 
     def do_count(self, line):
         """Retrieves the number of instances of a class

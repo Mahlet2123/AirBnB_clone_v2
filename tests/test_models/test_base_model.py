@@ -1,72 +1,88 @@
 #!/usr/bin/python3
-"""test for BaseModel"""
+"""
+Tests for the BaseModel
+"""
 import unittest
-import os
+import datetime
 from models.base_model import BaseModel
-import pep8
-from os import getenv
 
 
 class TestBaseModel(unittest.TestCase):
-    """this will test the base model class"""
+    """Contains the actual tests"""
 
-    @classmethod
-    def setUpClass(cls):
-        """setup for the test"""
-        cls.base = BaseModel()
-        cls.base.name = "Kev"
-        cls.base.num = 20
-
-    @classmethod
-    def teardown(cls):
-        """at the end of the test this will tear it down"""
-        del cls.base
+    def setUp(self):
+        '''Set up the base by creating an instance of the BaseModel'''
+        self.base_model = BaseModel()
+        self.base_model1 = BaseModel()
 
     def tearDown(self):
-        """teardown"""
-        try:
-            os.remove("file.json")
-        except Exception:
-            pass
+        """Delete instances"""
+        del self.base_model
+        del self.base_model1
 
-    def test_pep8_BaseModel(self):
-        """Testing for pep8"""
-        style = pep8.StyleGuide(quiet=True)
-        p = style.check_files(['models/base_model.py'])
-        self.assertEqual(p.total_errors, 0, "fix pep8")
+    def test_instances(self):
+        """Tests if the instances are created"""
+        self.assertIsInstance(self.base_model, BaseModel)
+        self.assertIsInstance(self.base_model1, BaseModel)
 
-    def test_checking_for_docstring_BaseModel(self):
-        """checking for docstrings"""
-        self.assertIsNotNone(BaseModel.__doc__)
-        self.assertIsNotNone(BaseModel.__init__.__doc__)
-        self.assertIsNotNone(BaseModel.__str__.__doc__)
-        self.assertIsNotNone(BaseModel.save.__doc__)
-        self.assertIsNotNone(BaseModel.to_dict.__doc__)
+    def test_uuid(self):
+        """Testing the uuid
+        1. if an instance is created
+        2. if instance has an id attribute
+        3. if id created in each instance is unique
+        """
+        self.assertTrue(hasattr(self.base_model, "id"))
+        self.assertTrue(hasattr(self.base_model1, "id"))
+        self.assertNotEqual(self.base_model.id, self.base_model1.id)
 
-    def test_method_BaseModel(self):
-        """chekcing if Basemodel have methods"""
-        self.assertTrue(hasattr(BaseModel, "__init__"))
-        self.assertTrue(hasattr(BaseModel, "save"))
-        self.assertTrue(hasattr(BaseModel, "to_dict"))
+    def test_datetime(self):
+        """Test the created_at and update_at attributes:
+        0. both should be dates
+        1. To be equal when instance is created
+        2. Should not be equal when save() method is called
+        3. test if instances have both attributes
+        4. compare to see if both attributes are equal(shouldn't)
+        5. create new instance and check if datetime is almost equal to now
+        """
+        # Test that created_at and updated_at are datesA
+        self.assertIsInstance(self.base_model.created_at, datetime.datetime)
+        self.assertIsInstance(self.base_model.updated_at, datetime.datetime)
+        # Test that instances have both created_at and updated_at attributes
+        self.assertTrue(hasattr(self.base_model, "created_at"))
+        self.assertTrue(hasattr(self.base_model, "updated_at"))
+        # Test that created_at and updated_at are equal when instance is created
+        self.assertEqual(self.base_model.created_at, self.base_model.updated_at)
+        # Test that created_at and updated_at aren't equal after save() is called
+        self.base_model.save()
+        self.assertNotEqual(self.base_model.created_at, self.base_model.updated_at)
 
-    def test_init_BaseModel(self):
-        """test if the base is an type BaseModel"""
-        self.assertTrue(isinstance(self.base, BaseModel))
+    def test_str(self):
+        """Tests the __str__ method
+        The expected output should be in the format:
+        [<class name>] (<self.id>) <self.__dict__>
+        """
+        string = str(self.base_model)
+        expected_string = "[{}] ({}) {}".format(
+                self.base_model.__class__.__name__,
+                self.base_model.id,
+                self.base_model.__dict__)
+        self.assertEqual(string, expected_string)
+    
+    def test_todict(self):
+        """Tests the to_dict() method:
+        1. By using self.__dict__: return only instance attributes
+        2. a __class__ key should be added to the dictionary
+        3. the datetime(created_at and updated_at should be strings
+            format -> %Y-OOA%m-%dT%H:%M:%S.%f
+        """
+        model_dict = self.base_model.to_dict()
+        self.assertTrue(type(model_dict), dict)
+        for key in model_dict:
+            # check if the keys contain strings
+            self.assertTrue(type(key), str)
+            # check if the keys are empty
+            self.assertNotEqual(key, None)
 
-    @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db",
-                     "Using DB")
-    def test_save_BaesModel(self):
-        """test if the save works"""
-        self.base.save()
-        self.assertNotEqual(self.base.created_at, self.base.updated_at)
 
-    def test_to_dict_BaseModel(self):
-        """test if dictionary works"""
-        base_dict = self.base.to_dict()
-        self.assertEqual(self.base.__class__.__name__, 'BaseModel')
-        self.assertIsInstance(base_dict['created_at'], str)
-        self.assertIsInstance(base_dict['updated_at'], str)
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

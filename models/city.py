@@ -1,26 +1,22 @@
 #!/usr/bin/python3
-"""This is the city class"""
+""" User module"""
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship, backref
+from os import getenv
 
 
 class City(BaseModel, Base):
-    """This is the class for City
-    Attributes:
-        state_id: The state id
-        name: input name
-    """
+    """class City that inherits from BaseModel"""
 
-    __tablename__ = "cities"
+    __tablename__ = 'cities'
+    state_id = Column(String(60), ForeignKey('states.id', ondelete='CASCADE'), nullable=False)
     name = Column(String(128), nullable=False)
-    state_id = Column(
-        String(60), ForeignKey("states.id", ondelete="CASCADE"), nullable=False
-    )
-    """
-    places = relationship(
-        "Place",
-        cascade="all",
-        backref=backref("cities", cascade="all"),
-        passive_deletes=True,
-    )"""
+
+    places = relationship('Place', backref='cities', cascade='all, delete')
+
+    if getenv('HBNB_TYPE_STORAGE') != 'db':
+        state_id = ""
+        name = ""
+
+

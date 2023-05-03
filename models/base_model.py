@@ -9,29 +9,28 @@ from sqlalchemy import Column, Integer, String, DateTime
 
 Base = declarative_base()
 
-
 class BaseModel:
-    """A base class for all hbnb models"""
+    """ construct """
 
     id = Column(String(60), nullable=False, primary_key=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
     updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
-        """Construct"""
+        """ Construct """
         if kwargs:
             for key, value in kwargs.items():
-                if key == "__class__":
+                if key == '__class__':
                     continue
-                elif key == "updated_at":
+                elif key == 'updated_at':
                     value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                elif key == "created_at":
+                elif key == 'created_at':
                     value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                if "id" not in kwargs.keys():
+                if 'id' not in kwargs.keys():
                     self.id = str(uuid4())
-                if "created_at" not in kwargs.keys():
+                if 'created_at' not in kwargs.keys():
                     self.created_at = datetime.now()
-                if "updated_at" not in kwargs.keys():
+                if 'updated_at' not in kwargs.keys():
                     self.updated_at = datetime.now()
                 setattr(self, key, value)
         else:
@@ -40,26 +39,26 @@ class BaseModel:
             self.updated_at = self.created_at
 
     def __str__(self):
-        """String"""
-        return "[{}] ({}) {}".format(
-               self.__class__.__name__, self.id, self.__dict__)
+        """ String """
+        return "[{}] ({}) {}" \
+               .format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
-        """save function"""
+        """ save function """
         self.updated_at = datetime.now()
         models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
-        """Return a dictonary"""
+        """ Return a dictonary """
         aux_dict = self.__dict__.copy()
-        aux_dict["__class__"] = self.__class__.__name__
-        aux_dict["created_at"] = self.created_at.isoformat()
-        aux_dict["updated_at"] = self.updated_at.isoformat()
-        if "_sa_instance_state" in aux_dict:
-            del aux_dict["_sa_instance_state"]
+        if aux_dict[_sa_instance_state]:
+            del aux_dict[_sa_instance_state] 
+        aux_dict['__class__'] = self.__class__.__name__
+        aux_dict['created_at'] = self.created_at.isoformat()
+        aux_dict['updated_at'] = self.updated_at.isoformat()
         return aux_dict
 
     def delete(self):
-        """delete the current instance from the storage"""
-        storage.delete(self)
+        """ to delete the current instance from the storage (models.storage) """
+        models.storage.delete(self)

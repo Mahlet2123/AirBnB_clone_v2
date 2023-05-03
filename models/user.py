@@ -17,9 +17,3 @@ class User(BaseModel, Base):
 
     places = relationship('Place', backref=backref("user", cascade="all,delete"))
     reviews = relationship('Review', backref=backref("user", cascade="all,delete"))
-
-    if getenv('HBNB_TYPE_STORAGE') != 'db':
-        email = ""
-        password = ""
-        first_name = ""
-        last_name = ""

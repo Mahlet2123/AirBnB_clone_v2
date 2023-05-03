@@ -25,7 +25,7 @@ class DBStorage():
             getenv('HBNB_MYSQL_HOST'),
             getenv('HBNB_MYSQL_DB'))
 
-        self.__engine = create_engine(url, pool_pre_ping=True, echo=True)
+        self.__engine = create_engine(url, pool_pre_ping=True)
 
         if getenv('HBNB_ENV') == 'test':
             #drop all tables
@@ -44,10 +44,8 @@ class DBStorage():
             # objs -> list of returned objects
         else:
             for name in list(self.classes_dict().keys())[1:]:
-                print (name)
                 class_objs = self.__session.query(text(name))
                 objs.extend(class_objs)
-                print(objs)
         for class_obj in objs:
             key = '{}.{}'.format(type(class_obj).__name__, class_obj.id)
             r_dict[key] = class_obj

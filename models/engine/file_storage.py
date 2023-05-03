@@ -26,7 +26,7 @@ class FileStorage:
                 if cls == type(value):
                     new_dict[key] = value
             return new_dict
-        return self.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""

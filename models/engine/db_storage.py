@@ -12,7 +12,16 @@ from os import getenv
 
 
 class DBStorage():
-    """ """
+    """ DBStorage class"""
+
+    __classNames = [
+            User,
+            State,
+            City,
+            Place,
+            Review
+            ]
+
     __engine = None
     __session = None
 
@@ -32,7 +41,7 @@ class DBStorage():
             Base.metadata.drop_all(bind=self.__engine)
 
 
-    def all(self, cls=None):
+    def my_all(self, cls=None):
         """
         query on the current database session (self.__session)
         all objects depending of the class name (argument cls)
@@ -50,6 +59,20 @@ class DBStorage():
             key = '{}.{}'.format(type(class_obj).__name__, class_obj.id)
             r_dict[key] = class_obj
         return r_dict
+
+    def all(self, cls=None):
+        #query to fetch all objects related to cls if cls
+        #is not None. Otherwise fetch all
+        list_obj = []
+        if not cls:
+           for obj in DBStorage.__classNames:
+               list_obj += (self.__session.query(obj))
+        else:
+            list_obj = self.__session.query(cls)
+
+        #return the dictionary reperesentation
+        #return {v.__class__.__name__ + '.' + v.id: v for v in list_obj
+        return {type(v).__name__ + '.' + v.id: v for v in list_obj}
 
     def new(self, obj):
         """ add the object to the current

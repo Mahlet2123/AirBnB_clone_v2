@@ -52,8 +52,8 @@ class BaseModel:
     def to_dict(self):
         """ Return a dictonary """
         aux_dict = self.__dict__.copy()
-        if aux_dict[_sa_instance_state]:
-            del aux_dict[_sa_instance_state] 
+        if '_sa_instance_state' in aux_dict:
+            del aux_dict['_sa_instance_state'] 
         aux_dict['__class__'] = self.__class__.__name__
         aux_dict['created_at'] = self.created_at.isoformat()
         aux_dict['updated_at'] = self.updated_at.isoformat()

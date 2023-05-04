@@ -7,7 +7,7 @@ import os
 from fabric.api import env, put, run
 
 
-env.hosts = ["54.172.89.19", "75.101.217.125"]
+env.hosts = ["34.207.222.16", "52.207.125.221"]
 env.user = "ubuntu"
 env.key_filename = "/root/.ssh/id_rsa"
 env.use_ssh_config = True
@@ -17,7 +17,6 @@ def do_deploy(archive_path):
     """
     distributes an archive to your web servers
     """
-    # verificamos si el path existe
     if os.path.exists(archive_path) is False:
         return False
     try:

@@ -40,7 +40,7 @@ def do_deploy(archive_path):
         run("rm -rf /data/web_static/current")
         run(
             "ln -s /data/web_static/releases/{}.format(filename))"
-            + "/data/web_static/current"
+            + " /data/web_static/current"
         )
         return True
     except (IOError, OSError) as e:

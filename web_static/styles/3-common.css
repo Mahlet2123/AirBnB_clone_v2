@@ -1,7 +1,8 @@
 body {
-	margin: 0px;
-	padding: 0px;
+	margin:0px;
+	padding:0px;
+
 	color: #484848;
 	font-size: 14px;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, Circular;
+	font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }

@@ -11,35 +11,28 @@ from models.review import Review
 from os import getenv
 
 
-class DBStorage():
-    """ DBStorage class"""
+class DBStorage:
+    """DBStorage class"""
 
-    __classNames = [
-            User,
-            State,
-            City,
-            Place,
-            Review
-            ]
+    __classNames = [User, State, City, Place, Review]
 
     __engine = None
     __session = None
 
-
     def __init__(self):
-        """ constructor """
-        url = 'mysql+mysqldb://{}:{}@{}/{}'.format(
-            getenv('HBNB_MYSQL_USER'),
-            getenv('HBNB_MYSQL_PWD'),
-            getenv('HBNB_MYSQL_HOST'),
-            getenv('HBNB_MYSQL_DB'))
+        """constructor"""
+        url = "mysql+mysqldb://{}:{}@{}/{}".format(
+            getenv("HBNB_MYSQL_USER"),
+            getenv("HBNB_MYSQL_PWD"),
+            getenv("HBNB_MYSQL_HOST"),
+            getenv("HBNB_MYSQL_DB"),
+        )
 
         self.__engine = create_engine(url, pool_pre_ping=True)
 
-        if getenv('HBNB_ENV') == 'test':
-            #drop all tables
+        if getenv("HBNB_ENV") == "test":
+            # drop all tables
             Base.metadata.drop_all(bind=self.__engine)
-
 
     def my_all(self, cls=None):
         """
@@ -56,41 +49,41 @@ class DBStorage():
                 class_objs = self.__session.query(text(name))
                 objs.extend(class_objs)
         for class_obj in objs:
-            key = '{}.{}'.format(type(class_obj).__name__, class_obj.id)
+            key = "{}.{}".format(type(class_obj).__name__, class_obj.id)
             r_dict[key] = class_obj
         return r_dict
 
     def all(self, cls=None):
-        #query to fetch all objects related to cls if cls
-        #is not None. Otherwise fetch all
+        # query to fetch all objects related to cls if cls
+        # is not None. Otherwise fetch all
         list_obj = []
         if not cls:
-           for obj in DBStorage.__classNames:
-               list_obj += (self.__session.query(obj))
+            for obj in DBStorage.__classNames:
+                list_obj += self.__session.query(obj)
         else:
             list_obj = self.__session.query(cls)
 
-        #return the dictionary reperesentation
-        #return {v.__class__.__name__ + '.' + v.id: v for v in list_obj
-        return {type(v).__name__ + '.' + v.id: v for v in list_obj}
+        # return the dictionary reperesentation
+        # return {v.__class__.__name__ + '.' + v.id: v for v in list_obj
+        return {type(v).__name__ + "." + v.id: v for v in list_obj}
 
     def new(self, obj):
-        """ add the object to the current
-        database session (self.__session) """
+        """add the object to the current
+        database session (self.__session)"""
         self.__session.add(obj)
 
     def save(self):
-        """ commit all changes of the current
-        database session (self.__session) """
+        """commit all changes of the current
+        database session (self.__session)"""
         self.__session.commit()
 
     def delete(self, obj=None):
-        """ delete from the current OOAdatabase session obj if not None """
+        """delete from the current OOAdatabase session obj if not None"""
         if obj:
             self.__session.delete(obj)
 
     def reload(self):
-        """ create all tables in the database (feature of SQLAlchemy) """
+        """create all tables in the database (feature of SQLAlchemy)"""
         from sqlalchemy.orm import sessionmaker
 
         Base.metadata.create_all(self.__engine)

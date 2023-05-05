@@ -16,7 +16,7 @@ class FileStorage:
 
     def my_all(self, cls=None):
         """
-        if cls is not None, 
+        if cls is not None,
         returns the list of objects of type of cls.
         returns the dictionary __objects
         """
@@ -96,9 +96,10 @@ class FileStorage:
             for object_del in list(FileStorage.__objects.keys()):
                 if key == object_del:
                     del FileStorage.__objects[key]
+
     def delete(self, obj=None):
-        """ To delete a specific instance """
+        """To delete a specific instance"""
         if obj:
-            className = obj.__class__.__name__ + '.' + obj.id
+            className = obj.__class__.__name__ + "." + obj.id
             if className in self.__objects.keys():
                 del self.__objects[className]

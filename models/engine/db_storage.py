@@ -4,13 +4,15 @@ from sqlalchemy import create_engine, MetaData, text
 from models.base_model import BaseModel, Base
 from models.state import State
 from models.city import City
+from models.user import User
+from models.place import Place
 from os import getenv
 
 
 class DBStorage:
     """DBStorage class"""
 
-    __classNames = [State, City]
+    __classNames = [State, City, User, Place]
 
     __engine = None
     __session = None
@@ -90,10 +92,13 @@ class DBStorage:
         """collection of classes"""
         from models.city import City
         from models.state import State
+        from models.user import User
 
         classes_dict = {
             "BaseModel": BaseModel,
             "State": State,
             "City": City,
+            "User": User,
+            "Place": Place
         }
         return classes_dict

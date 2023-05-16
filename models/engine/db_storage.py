@@ -2,19 +2,15 @@
 """ The database storage module """
 from sqlalchemy import create_engine, MetaData, text
 from models.base_model import BaseModel, Base
-from models.user import User
 from models.state import State
 from models.city import City
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
 from os import getenv
 
 
 class DBStorage:
     """DBStorage class"""
 
-    __classNames = [User, State, City, Place, Review]
+    __classNames = [State, City]
 
     __engine = None
     __session = None
@@ -92,20 +88,12 @@ class DBStorage:
 
     def classes_dict(self):
         """collection of classes"""
-        from models.user import User
-        from models.place import Place
         from models.city import City
-        from models.amenity import Amenity
         from models.state import State
-        from models.review import Review
 
         classes_dict = {
             "BaseModel": BaseModel,
-            "User": User,
-            "Place": Place,
             "State": State,
             "City": City,
-            "Amenity": Amenity,
-            "Review": Review,
         }
         return classes_dict

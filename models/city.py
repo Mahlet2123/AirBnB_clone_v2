@@ -14,5 +14,3 @@ class City(BaseModel, Base):
         String(60), ForeignKey("states.id", ondelete="CASCADE"), nullable=False
     )
     name = Column(String(128), nullable=False)
-
-    places = relationship("Place", backref="cities", cascade="all, delete")

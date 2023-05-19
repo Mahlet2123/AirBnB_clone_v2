@@ -41,7 +41,15 @@ class BaseModel:
 
     def __str__(self):
         """String"""
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.to_dict())
+        _dict = self.to_dict()
+        if '__class__' in _dict:
+            del _dict['__class__']
+        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, _dict)
+
+    def __repr__(self):
+        """return a string representaion
+        """
+        return self.__str__()
 
     def save(self):
         """save function"""
@@ -51,10 +59,9 @@ class BaseModel:
 
     def to_dict(self):
         """Return a dictonary"""
-        #aux_dict = self.__dict__.copy()
-        if '_sa_instance_state' in self.__dict__.keys():
-            self.__dict__.pop('_sa_instance_state', None)
         aux_dict = self.__dict__.copy()
+        if '_sa_instance_state' in self.__dict__.keys():
+            aux_dict.pop('_sa_instance_state', None)
         aux_dict["__class__"] = self.__class__.__name__
         aux_dict["created_at"] = self.created_at.isoformat()
         aux_dict["updated_at"] = self.updated_at.isoformat()

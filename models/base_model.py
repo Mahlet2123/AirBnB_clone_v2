@@ -50,6 +50,19 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
+        """creates dictionary of the class  and returns
+        Return:
+            returns a dictionary of all the key values in __dict__
+        """
+        my_dict = dict(self.__dict__)
+        my_dict["__class__"] = str(type(self).__name__)
+        my_dict["created_at"] = self.created_at.isoformat()
+        my_dict["updated_at"] = self.updated_at.isoformat()
+        if "_sa_instance_state" in my_dict:
+            del my_dict["_sa_instance_state"]
+        return my_dict
+
+    def my_to_dict(self):
         """Return a dictonary"""
         aux_dict = self.__dict__.copy()
         if "_sa_instance_state" in aux_dict:

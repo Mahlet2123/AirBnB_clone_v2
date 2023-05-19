@@ -9,16 +9,17 @@ from os import getenv
 class State(BaseModel, Base):
     """class State that inherits from BaseModel"""
 
-    __tablename__ = 'states'
+    __tablename__ = "states"
     name = Column(String(60), nullable=False)
 
-    cities = relationship('City', backref='state', cascade='all, delete')
+    cities = relationship("City", backref="state", cascade="all, delete")
 
-    if getenv('HBNB_TYPE_STORAGE') != 'db':
+    if getenv("HBNB_TYPE_STORAGE") != "db":
+
         @property
         def cities(self):
-            """  getter attribute cities that returns the list of City
-            instances with state_id equals to the current State.id """
+            """getter attribute cities that returns the list of City
+            instances with state_id equals to the current State.id"""
             from models import storage
             from models import City
 

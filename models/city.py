@@ -9,8 +9,10 @@ from os import getenv
 class City(BaseModel, Base):
     """class City that inherits from BaseModel"""
 
-    __tablename__ = 'cities'
-    state_id = Column(String(60), ForeignKey('states.id', ondelete='CASCADE'), nullable=False)
+    __tablename__ = "cities"
+    state_id = Column(
+        String(60), ForeignKey("states.id", ondelete="CASCADE"), nullable=False
+    )
     name = Column(String(128), nullable=False)
 
     places = relationship('Place', backref='cities', cascade='all, delete')

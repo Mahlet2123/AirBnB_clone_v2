@@ -32,8 +32,8 @@ class FileStorage:
         """Return the dictionary representation of the
         instances"""
         if not cls:
-            return self.__objects
-        return {k: v for k, v in self.__objects.items() if type(v) == cls}
+            return FileStorage.__objects
+        return {k: v for k, v in FileStorage.__objects.items() if type(v) == cls}
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""

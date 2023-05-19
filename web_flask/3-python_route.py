@@ -22,14 +22,13 @@ def hbnb():
 @app.route("/c/<text>", strict_slashes=False)
 def c(text):
     """Handles the root/c/<text> url"""
-    return "C {}".format(escape(text).replace("_", " "))
-
+    return "C {}".format(escape(text).replace('_', ' '))
 
 @app.route("/python", strict_slashes=False, defaults={"text": "is cool"})
 @app.route("/python/<text>", strict_slashes=False)
 def python(text):
-    """Handles the root/python/(<text>) url"""
-    return "Python {}".format(escape(text).replace("_", " "))
+    """ Handles the /python/(<text>) url """
+    return "Python {}".format(escape(text).replace('_', ' '))
 
 
 if __name__ == "__main__":

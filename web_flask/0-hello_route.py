@@ -5,9 +5,10 @@ from flask import Flask
 
 app = Flask(__name__)
 
+
 @app.route("/", strict_slashes=False)
 def hello_hbnb():
-    """ Handles the root url"""
+    """Handles the root url"""
     return "Hello HBNB!"
 
 

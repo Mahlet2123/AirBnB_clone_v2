@@ -14,20 +14,6 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
-    def my_all(self, cls=None):
-        """
-        if cls is not None,
-        returns the list of objects of type of cls.
-        returns the dictionary __objects
-        """
-        new_dict = {}
-        if cls:
-            for key, value in FileStorage.__objects.items():
-                if cls == type(value):
-                    new_dict[key] = value
-            return new_dict
-        return FileStorage.__objects
-
     def all(self, cls=None):
         """Return the dictionary representation of the
         instances"""
@@ -85,17 +71,6 @@ class FileStorage:
                 FileStorage.__objects[key] = obj
         except FileNotFoundError:
             pass
-
-    def my_delete(self, obj=None):
-        """
-        to delete obj from __objects if it’s inside -
-        if obj is equal to None, the method should not do anything
-        """
-        if obj:
-            key = "{}.{}".format(type(obj).__name__, obj.id)
-            for object_del in list(FileStorage.__objects.keys()):
-                if key == object_del:
-                    del FileStorage.__objects[key]
 
     def delete(self, obj=None):
         """To delete a specific instance"""

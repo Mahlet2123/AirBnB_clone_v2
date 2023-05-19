@@ -7,13 +7,14 @@ from models.city import City
 from models.user import User
 from models.place import Place
 from models.review import Review
+from models.amenity import Amenity
 from os import getenv
 
 
 class DBStorage:
     """DBStorage class"""
 
-    __classNames = [State, City, User, Place, Review]
+    __classNames = [State, City, User, Place, Review, Amenity]
 
     __engine = None
     __session = None
@@ -91,11 +92,6 @@ class DBStorage:
 
     def classes_dict(self):
         """collection of classes"""
-        from models.city import City
-        from models.state import State
-        from models.user import User
-        from models.place import Place
-        from models.review import Review
 
         classes_dict = {
             "BaseModel": BaseModel,
@@ -103,6 +99,7 @@ class DBStorage:
             "City": City,
             "User": User,
             "Place": Place,
-            "Review": Review
+            "Review": Review,
+            "Amenity": Amenity
         }
         return classes_dict

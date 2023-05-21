@@ -17,6 +17,8 @@ def state_list():
 
 @app.teardown_appcontext
 def remove_session(exception):
+    """ a Flask teardown function.
+    It is executed after each request to the Flask application. """
     storage.close()
 
 if __name__ == "__main__":

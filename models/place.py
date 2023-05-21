@@ -5,6 +5,7 @@ from sqlalchemy import Column, String, Float, Integer, ForeignKey, Table
 from sqlalchemy.orm import relationship, backref
 from os import getenv
 from models.amenity import Amenity
+from sqlalchemy import text
 
 
 place_amenity = Table(
@@ -26,11 +27,16 @@ place_amenity = Table(
     ),
 )
 
+
 class Place(BaseModel, Base):
     """class Place that inherits from BaseModel"""
+
     __tablename__ = "places"
     city_id = Column(
-        String(60), ForeignKey("cities.id", ondelete="CASCADE"), nullable=False
+        String(60),
+        ForeignKey("cities.id", ondelete="CASCADE"),
+        nullable=False,
+        server_default=text("'' COLLATE 'latin1_swedish_ci'"),
     )
     user_id = Column(
         String(60), ForeignKey("users.id", ondelete="CASCADE"), nullable=False

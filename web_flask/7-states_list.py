@@ -12,12 +12,13 @@ app = Flask(__name__)
 def state_list():
     """ display a HTML page with the list of all State objects
     present in DBStorage sorted by name (A->Z) """
-    states = list(storage.all(State))
+    states = list(storage.all(State).values())
     return render_template("7-states_list.html", states=states)
 
 @app.teardown_appcontext
-def remove_session():
+def remove_session(exception):
     storage.close()
 
 if __name__ == "__main__":
+    #storage.reload()
     app.run(host="0.0.0.0", port=5000)

@@ -24,6 +24,7 @@ place_amenity = Table(
         ForeignKey("amenities.id"),
         primary_key=True,
         nullable=False,
+        server_default=text("'' COLLATE 'latin1_swedish_ci'")
     ),
 )
 
